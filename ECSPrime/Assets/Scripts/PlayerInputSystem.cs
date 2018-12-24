@@ -21,7 +21,7 @@ public class PlayerInputSystem : ComponentSystem
         pi.MousePosition.y = Input.mousePosition.y;
         pi.MousePosition.z = Input.mousePosition.z;
         //pi.FireCooldown = Mathf.Max(0.0f, m_Players.Input[i].FireCooldown - dt);
-
+        pi.Run = Input.GetKey(KeyCode.LeftShift) ? 5 : 1;
         m_Players.Input[0] = pi;
     }
 

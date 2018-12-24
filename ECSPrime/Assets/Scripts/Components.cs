@@ -6,6 +6,7 @@ public struct PlayerInput : IComponentData
 {
     public float3 MoveDir;
     public float3 MousePosition;
+    public float Run;
     //public float FireCooldown;
     //public bool Fire;
 }
@@ -15,18 +16,15 @@ public struct BotAI : IComponentData
     public float3 MoveDir;
     public float3 MousePosition;
     public int targetIndex;
-    //public float FireCooldown;
-    //public bool Fire;
 }
 
-public struct UnitStats : IComponentData
-{
-    public int team;
-    public float Health;
-    public Stat MaxHealth, Power, DamageReduction, MovementSpeed;
+public struct Team : IComponentData { public int Value; }
+public struct Health : IComponentData { public float Value; }
+public struct MaxHealth : IComponentData { public Stat Value; }
+public struct Power : IComponentData { public Stat Value; }
+public struct DamageReduction : IComponentData { public Stat Value; }
+public struct MovementSpeed : IComponentData { public Stat Value; }
 
-
-}
 public struct Stat
 {
     public float BaseValue;

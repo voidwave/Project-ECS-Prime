@@ -16,11 +16,11 @@ public class CameraSystem : MonoBehaviour
         Vector3 playerPosition = entityManager.GetComponentData<Position>(player).Value;
         playerPosition.y += 8;
         playerPosition.z -= 10;
-        
+
         Vector3 dir = playerPosition - transform.localPosition;
-        dir = dir.normalized;
-        
-        transform.localPosition = transform.localPosition + Time.deltaTime * speed * dir;
+        //dir = dir.normalized;
+        if (dir.magnitude > 0.1f)
+            transform.localPosition = transform.localPosition + Time.deltaTime * speed * dir;
 
 
     }

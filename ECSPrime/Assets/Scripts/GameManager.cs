@@ -30,8 +30,14 @@ public class GameManager : MonoBehaviour
             typeof(LocalToWorld),
             typeof(Position),
             typeof(Rotation),
-            typeof(UnitStats),
+            typeof(Team),
+            typeof(MovementSpeed),
+            typeof(Health),
+            typeof(MaxHealth),
+            typeof(Power),
+            typeof(DamageReduction),
             typeof(PlayerInput),
+            typeof(BotAI),
             typeof(MeshInstanceRenderer)
         );
 
@@ -45,19 +51,25 @@ public class GameManager : MonoBehaviour
         });
 
         entityManager.SetComponentData(player, new Position { Value = new float3(0, 0, 0) });
-        entityManager.SetComponentData(player, new UnitStats { team = 0, Health = 100, MaxHealth = new Stat(100), DamageReduction = new Stat(0), Power = new Stat(10), MovementSpeed = new Stat(1) });
-
+        //entityManager.SetComponentData(player, new UnitStats { team = 0, Health = 100, MaxHealth = new Stat(100), DamageReduction = new Stat(0), Power = new Stat(10), MovementSpeed = new Stat(1) });
+        entityManager.SetComponentData(player, new Team { Value = 0 });
+        entityManager.SetComponentData(player, new MovementSpeed { Value = new Stat(1) });
         //Bots Spawn
         var enemyArchetype = entityManager.CreateArchetype(
             typeof(LocalToWorld),
             typeof(Position),
             typeof(Rotation),
-            typeof(UnitStats),
+            typeof(Team),
+            typeof(MovementSpeed),
+            typeof(Health),
+            typeof(MaxHealth),
+            typeof(Power),
+            typeof(DamageReduction),
             typeof(BotAI),
             typeof(MeshInstanceRenderer)
         );
 
-        NativeArray<Entity> enemyEntities = new NativeArray<Entity>(100, Allocator.Temp);
+        NativeArray<Entity> enemyEntities = new NativeArray<Entity>(1000, Allocator.Temp);
         entityManager.CreateEntity(enemyArchetype, enemyEntities);
 
         MeshInstanceRenderer enemyMeshRenderer = new MeshInstanceRenderer
@@ -70,9 +82,9 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < enemyEntities.Length; i++)
         {
             entityManager.SetSharedComponentData(enemyEntities[i], enemyMeshRenderer);
-            entityManager.SetComponentData(enemyEntities[i], new Position { Value = new float3(UnityEngine.Random.Range(-5, 5), 0, UnityEngine.Random.Range(-5, 5)) });
-            entityManager.SetComponentData(enemyEntities[i],
-            new UnitStats { team = 1, Health = 100, MaxHealth = new Stat(100), DamageReduction = new Stat(0), Power = new Stat(10), MovementSpeed = new Stat(1) });
+            entityManager.SetComponentData(enemyEntities[i], new Position { Value = new float3(UnityEngine.Random.Range(-10, 10), 0, UnityEngine.Random.Range(-10, 10)) });
+            entityManager.SetComponentData(enemyEntities[i], new Team { Value = 1 });
+            entityManager.SetComponentData(enemyEntities[i], new MovementSpeed { Value = new Stat(1) });
         }
 
         enemyEntities.Dispose();

@@ -13,18 +13,21 @@ public class EnemyAISystem : JobComponentSystem
     {
         public ComponentDataArray<BotAI> botAIs;
         [ReadOnly] public ComponentDataArray<Position> positions;
-        [ReadOnly] public ComponentDataArray<UnitStats> unitStats;
+        [ReadOnly] public ComponentDataArray<Team> teams;
         //public float dt;
 
         public void Execute(int i)
         {
+            if (teams[i].Value == 0)
+                return;
+
             float3 dir = new float3(0, 0, 0);
             float detectionRange = 10;
             float closestEnemy = 100;
             int targetID = -1;
-            for (int j = 0; j < unitStats.Length; j++)
+            for (int j = 0; j < teams.Length; j++)
             {
-                if (unitStats[j].team == unitStats[i].team)
+                if (teams[j].Value == teams[i].Value)
                     continue;
 
                 float distance = math.distance(positions[j].Value, positions[i].Value);
@@ -36,7 +39,7 @@ public class EnemyAISystem : JobComponentSystem
                     continue;
 
                 closestEnemy = distance;
-                dir = positions[i].Value - positions[j].Value;
+                dir = positions[j].Value - positions[i].Value;
                 targetID = j;
             }
 
@@ -57,7 +60,7 @@ public class EnemyAISystem : JobComponentSystem
     {
         m_EnemyAIGroup = GetComponentGroup(
             ComponentType.ReadOnly(typeof(Position)),
-            ComponentType.ReadOnly(typeof(UnitStats)),
+            ComponentType.ReadOnly(typeof(Team)),
             typeof(BotAI));
     }
 
@@ -66,7 +69,7 @@ public class EnemyAISystem : JobComponentSystem
         var aiJob = new EnemyAIJob
         {
             positions = m_EnemyAIGroup.GetComponentDataArray<Position>(),
-            unitStats = m_EnemyAIGroup.GetComponentDataArray<UnitStats>(),
+            teams = m_EnemyAIGroup.GetComponentDataArray<Team>(),
             botAIs = m_EnemyAIGroup.GetComponentDataArray<BotAI>()
         };
         var aiJobHandle = aiJob.Schedule(m_EnemyAIGroup.CalculateLength(), 64, inputDeps);
