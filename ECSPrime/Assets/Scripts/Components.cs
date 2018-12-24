@@ -11,11 +11,14 @@ public struct PlayerInput : IComponentData
     //public bool Fire;
 }
 
-public struct BotAI : IComponentData
+public struct Heading : IComponentData
 {
-    public float3 MoveDir;
-    public float3 MousePosition;
-    public int targetIndex;
+    public float3 Value;
+    //public float3 MousePosition;
+}
+public struct Target : IComponentData
+{
+    public int Value;
 }
 
 public struct Team : IComponentData { public int Value; }

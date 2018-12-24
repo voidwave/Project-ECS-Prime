@@ -11,18 +11,18 @@ public class MovementSystem : JobComponentSystem
     
 
     [Unity.Burst.BurstCompile]
-    struct UnitMovementJob : IJobProcessComponentData<Position, Rotation, MovementSpeed, BotAI>
+    struct UnitMovementJob : IJobProcessComponentData<Position, Rotation, MovementSpeed, Heading>
     {
         public float deltaTime;
 
-        public void Execute(ref Position position, ref Rotation rotation, [ReadOnly] ref MovementSpeed speed, [ReadOnly] ref BotAI ai)
+        public void Execute(ref Position position, ref Rotation rotation, [ReadOnly] ref MovementSpeed speed, [ReadOnly] ref Heading heading)
         {
 
-            if (ai.MoveDir.x == 0 && ai.MoveDir.z == 0)
+            if (heading.Value.x == 0 && heading.Value.z == 0)
                 return;
 
             float3 value = position.Value;
-            float3 dir = new float3(ai.MoveDir.x, 0, ai.MoveDir.z);
+            float3 dir = new float3(heading.Value.x, 0, heading.Value.z);
             dir = math.normalize(dir);
             rotation.Value = Quaternion.LookRotation(dir);
             value += deltaTime * speed.Value.Value * math.forward(rotation.Value);
