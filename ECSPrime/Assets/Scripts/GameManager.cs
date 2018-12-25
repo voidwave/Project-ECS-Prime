@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         entityManager.SetComponentData(player, new Position { Value = new float3(0, 0, 0) });
         //entityManager.SetComponentData(player, new UnitStats { team = 0, Health = 100, MaxHealth = new Stat(100), DamageReduction = new Stat(0), Power = new Stat(10), MovementSpeed = new Stat(1) });
         //entityManager.SetComponentData(player, new Team { Value = 0 });
-        entityManager.SetComponentData(player, new MovementSpeed { Value = new Stat(1) });
+        entityManager.SetComponentData(player, new MovementSpeed { Value = 1 });
         //Bots Spawn
         var enemyArchetype = entityManager.CreateArchetype(
             typeof(LocalToWorld),
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
             entityManager.SetSharedComponentData(enemyEntities[i], enemyMeshRenderer);
             entityManager.SetComponentData(enemyEntities[i], new Position { Value = new float3(UnityEngine.Random.Range(-100, 100), 0, UnityEngine.Random.Range(-100, 100)) });
             //entityManager.SetComponentData(enemyEntities[i], new Team { Value = 1 });
-            entityManager.SetComponentData(enemyEntities[i], new MovementSpeed { Value = new Stat(1) });
+            entityManager.SetComponentData(enemyEntities[i], new MovementSpeed { Value = 1 });
         }
 
         enemyEntities.Dispose();

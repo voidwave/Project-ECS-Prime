@@ -18,7 +18,8 @@ public class EnemyAISystem : JobComponentSystem
 
         public void Execute(int i)
         {
-            if (i== 0)
+            //i=0 is player
+            if (i == 0)
                 return;
 
             float3 dir = new float3(0, 0, 0);

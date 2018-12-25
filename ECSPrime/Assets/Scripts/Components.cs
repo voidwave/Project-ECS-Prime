@@ -4,30 +4,25 @@ using Unity.Mathematics;
 
 public struct PlayerInput : IComponentData
 {
-    public float3 MoveDir;
+    //public float3 MoveDir;
     public float3 MousePosition;
-    public float Run;
+    //public float Run;
     //public float FireCooldown;
     //public bool Fire;
 }
 
-public struct Heading : IComponentData
-{
-    public float3 Value;
-    //public float3 MousePosition;
-}
-public struct Target : IComponentData
-{
-    public int Value;
-}
-
+public struct Heading : IComponentData { public float3 Value; }
+public struct Target : IComponentData { public int Value; }
 public struct Team : IComponentData { public int Value; }
 public struct Health : IComponentData { public float Value; }
-public struct MaxHealth : IComponentData { public Stat Value; }
-public struct Power : IComponentData { public Stat Value; }
-public struct DamageReduction : IComponentData { public Stat Value; }
-public struct MovementSpeed : IComponentData { public Stat Value; }
+public struct MaxHealth : IComponentData { public float Value; }
+public struct Power : IComponentData { public float Value; }
+public struct DamageReduction : IComponentData { public float Value; }
+public struct MovementSpeed : IComponentData { public float Value; }
 
+
+
+//this wont work...
 public struct Stat
 {
     public float BaseValue;

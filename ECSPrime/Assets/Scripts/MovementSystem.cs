@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Jobs;
 using Unity.Entities;
 using Unity.Transforms;
@@ -25,7 +24,7 @@ public class MovementSystem : JobComponentSystem
             float3 dir = new float3(heading.Value.x, 0, heading.Value.z);
             dir = math.normalize(dir);
             rotation.Value = Quaternion.LookRotation(dir);
-            value += deltaTime * speed.Value.Value * math.forward(rotation.Value);
+            value += deltaTime * speed.Value * math.forward(rotation.Value);
             position.Value = value;
 
         }
