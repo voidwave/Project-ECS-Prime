@@ -13,7 +13,7 @@ public class CameraSystem : MonoBehaviour
         if (player == null)
             return;
 
-        Vector3 playerPosition = entityManager.GetComponentData<Position>(player).Value;
+        Vector3 playerPosition = entityManager.GetComponentData<Translation>(player).Value;
         playerPosition.y += 8;
         playerPosition.z -= 10;
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
-using Unity.Rendering;
+//using Unity.Rendering;
 using UnityEngine.Rendering;
 using Unity.Collections;
 using Unity.Mathematics;
@@ -22,12 +22,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Debug.Log("GameManager Initilize();");
-        var entityManager = World.Active.GetOrCreateManager<EntityManager>();
+        var entityManager = World.Active.GetOrCreateSystem<EntityManager>();
 
         //Player Spawn
         var playerArchetype = entityManager.CreateArchetype(
             typeof(LocalToWorld),
-            typeof(Position),
+            typeof(Translation),
             typeof(Rotation),
             //typeof(Team),
             typeof(MovementSpeed),
@@ -50,14 +50,14 @@ public class GameManager : MonoBehaviour
             castShadows = ShadowCastingMode.On
         });
 
-        entityManager.SetComponentData(player, new Position { Value = new float3(0, 0, 0) });
+        entityManager.SetComponentData(player, new Translation { Value = new float3(0, 0, 0) });
         //entityManager.SetComponentData(player, new UnitStats { team = 0, Health = 100, MaxHealth = new Stat(100), DamageReduction = new Stat(0), Power = new Stat(10), MovementSpeed = new Stat(1) });
         //entityManager.SetComponentData(player, new Team { Value = 0 });
         entityManager.SetComponentData(player, new MovementSpeed { Value = 1 });
         //Bots Spawn
         var enemyArchetype = entityManager.CreateArchetype(
             typeof(LocalToWorld),
-            typeof(Position),
+            typeof(Translation),
             typeof(Rotation),
             //typeof(Team),
             typeof(MovementSpeed),
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < enemyEntities.Length; i++)
         {
             entityManager.SetSharedComponentData(enemyEntities[i], enemyMeshRenderer);
-            entityManager.SetComponentData(enemyEntities[i], new Position { Value = new float3(UnityEngine.Random.Range(-100, 100), 0, UnityEngine.Random.Range(-100, 100)) });
+            entityManager.SetComponentData(enemyEntities[i], new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), 0, UnityEngine.Random.Range(-100, 100)) });
             //entityManager.SetComponentData(enemyEntities[i], new Team { Value = 1 });
             entityManager.SetComponentData(enemyEntities[i], new MovementSpeed { Value = 1 });
         }

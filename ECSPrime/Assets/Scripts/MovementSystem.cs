@@ -10,11 +10,11 @@ public class MovementSystem : JobComponentSystem
     
 
     [Unity.Burst.BurstCompile]
-    struct UnitMovementJob : IJobProcessComponentData<Position, Rotation, MovementSpeed, Heading>
+    struct UnitMovementJob : IJobProcessComponentData<Translation, Rotation, MovementSpeed, Heading>
     {
         public float deltaTime;
 
-        public void Execute(ref Position position, ref Rotation rotation, [ReadOnly] ref MovementSpeed speed, [ReadOnly] ref Heading heading)
+        public void Execute(ref Translation position, ref Rotation rotation, [ReadOnly] ref MovementSpeed speed, [ReadOnly] ref Heading heading)
         {
 
             if (heading.Value.x == 0 && heading.Value.z == 0)

@@ -12,7 +12,7 @@ public class EnemyAISystem : JobComponentSystem
     struct EnemyAIJob : IJobParallelFor
     {
         public ComponentDataArray<Heading> headings;
-        [ReadOnly] public ComponentDataArray<Position> positions;
+        [ReadOnly] public ComponentDataArray<Translation> positions;
         //[ReadOnly] public ComponentDataArray<Team> teams;
         //public float dt;
 
@@ -54,12 +54,12 @@ public class EnemyAISystem : JobComponentSystem
         }
     }
 
-    ComponentGroup m_EnemyAIGroup;
+    EntityQuery m_EnemyAIGroup;
 
     protected override void OnCreateManager()
     {
-        m_EnemyAIGroup = GetComponentGroup(
-            ComponentType.ReadOnly(typeof(Position)),
+        m_EnemyAIGroup = GetEntityQuery(
+            ComponentType.ReadOnly(typeof(Translation)),
             //ComponentType.ReadOnly(typeof(Team)),
             typeof(Heading));
     }
@@ -68,7 +68,7 @@ public class EnemyAISystem : JobComponentSystem
     {
         var aiJob = new EnemyAIJob
         {
-            positions = m_EnemyAIGroup.GetComponentDataArray<Position>(),
+            positions = m_EnemyAIGroup.GetComponentDataArray<Translation>(),
             //teams = m_EnemyAIGroup.GetComponentDataArray<Team>(),
             headings = m_EnemyAIGroup.GetComponentDataArray<Heading>()
         };
