@@ -10,7 +10,7 @@ public class MovementSystem : JobComponentSystem
     
 
     [Unity.Burst.BurstCompile]
-    struct UnitMovementJob : IJobProcessComponentData<Translation, Rotation, MovementSpeed, Heading>
+    struct UnitMovementJob : IJobForEach<Translation, Rotation, MovementSpeed, Heading>
     {
         public float deltaTime;
 
