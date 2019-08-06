@@ -4,28 +4,29 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
-
+using Unity.Burst;
+using Unity.Physics;
 public class MovementSystem : JobComponentSystem
 {
-    
 
-    [Unity.Burst.BurstCompile]
-    struct UnitMovementJob : IJobForEach<Translation, Rotation, MovementSpeed, Heading>
+
+    [BurstCompile]
+    struct UnitMovementJob : IJobForEach<PhysicsVelocity, Rotation, MovementSpeed, Heading>
     {
         public float deltaTime;
 
-        public void Execute(ref Translation position, ref Rotation rotation, [ReadOnly] ref MovementSpeed speed, [ReadOnly] ref Heading heading)
+        public void Execute(ref PhysicsVelocity velocity, ref Rotation rotation, [ReadOnly] ref MovementSpeed speed, [ReadOnly] ref Heading heading)
         {
 
             if (heading.Value.x == 0 && heading.Value.z == 0)
                 return;
 
-            float3 value = position.Value;
+
             float3 dir = new float3(heading.Value.x, 0, heading.Value.z);
             dir = math.normalize(dir);
             rotation.Value = Quaternion.LookRotation(dir);
-            value += deltaTime * speed.Value * math.forward(rotation.Value);
-            position.Value = value;
+            velocity.Linear = speed.Value * math.forward(rotation.Value);
+
 
         }
 
@@ -33,7 +34,7 @@ public class MovementSystem : JobComponentSystem
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        
+
 
         UnitMovementJob moveJob = new UnitMovementJob
         {

@@ -7,7 +7,12 @@ public class CameraSystem : MonoBehaviour
 {
     public EntityManager entityManager;
     public Entity player;
+    public Transform cameraTransform;
     [SerializeField] private float speed = 1;
+    void Start()
+    {
+        cameraTransform = transform;
+    }
     void Update()
     {
         if (player == null)

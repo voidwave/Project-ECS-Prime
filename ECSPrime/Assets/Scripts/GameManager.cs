@@ -6,7 +6,7 @@ using Unity.Rendering;
 using UnityEngine.Rendering;
 using Unity.Collections;
 using Unity.Mathematics;
-//using Unity.Physics;
+using Unity.Physics;
 public class GameManager : MonoBehaviour
 {
     private UnityEngine.Mesh PlayerMesh, EnemyMesh;// = (Resources.Load("Prefabs/Player") as GameObject).GetComponent<MeshFilter>().sharedMesh;
@@ -78,7 +78,9 @@ public class GameManager : MonoBehaviour
             typeof(Heading),
             //typeof(Target),
             typeof(RenderMesh),
-            typeof(Unity.Physics.PhysicsCollider)
+            typeof(PhysicsVelocity),
+            typeof(PhysicsMass),
+            typeof(PhysicsCollider)
         );
 
         NativeArray<Entity> enemyEntities = new NativeArray<Entity>(10000, Allocator.Temp);
@@ -96,10 +98,12 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < enemyEntities.Length; i++)
         {
             entityManager.SetComponentData(enemyEntities[i], physicsCollider);
+            entityManager.SetComponentData(enemyEntities[i], PhysicsMass.CreateDynamic(MassProperties.UnitSphere, 1));
             entityManager.SetSharedComponentData(enemyEntities[i], enemyMeshRenderer);
             entityManager.SetComponentData(enemyEntities[i], new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), 0, UnityEngine.Random.Range(-100, 100)) });
             //entityManager.SetComponentData(enemyEntities[i], new Team { Value = 1 });
             entityManager.SetComponentData(enemyEntities[i], new MovementSpeed { Value = 1 });
+            entityManager.SetComponentData(enemyEntities[i], new Heading { Value = new float3(UnityEngine.Random.Range(-1.0f, 1.0f), 0, UnityEngine.Random.Range(-1.0f, 1.0f)) });
         }
 
         enemyEntities.Dispose();
@@ -108,5 +112,15 @@ public class GameManager : MonoBehaviour
         cameraSystem.player = player;
     }
 
+
+    void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Quaternion currentRot = cameraSystem.cameraTransform.localRotation;
+            Quaternion rotation = Quaternion.Euler(Input.GetAxis("Mouse Y") + currentRot.eulerAngles.x, -Input.GetAxis("Mouse X") + currentRot.eulerAngles.y, 0);
+            cameraSystem.cameraTransform.localRotation = Quaternion.Lerp(cameraSystem.cameraTransform.localRotation, rotation, Time.deltaTime * 50);
+        }
+    }
 }
 
