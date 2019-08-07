@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Physics;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private UnityEngine.Mesh PlayerMesh, EnemyMesh;// = (Resources.Load("Prefabs/Player") as GameObject).GetComponent<MeshFilter>().sharedMesh;
@@ -115,12 +116,25 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        UpdateFPS();
         if (Input.GetMouseButton(0))
         {
             Quaternion currentRot = cameraSystem.cameraTransform.localRotation;
             Quaternion rotation = Quaternion.Euler(Input.GetAxis("Mouse Y") + currentRot.eulerAngles.x, -Input.GetAxis("Mouse X") + currentRot.eulerAngles.y, 0);
             cameraSystem.cameraTransform.localRotation = Quaternion.Lerp(cameraSystem.cameraTransform.localRotation, rotation, Time.deltaTime * 50);
         }
+    }
+
+    [SerializeField] private Text FPS;
+    private float deltaTime = 0.0f;
+    private void UpdateFPS()
+    {
+
+        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+        float fps = 1.0f / deltaTime;
+        float msec = deltaTime * 1000.0f;
+        FPS.text = "FPS " + fps.ToString("0.0");
+
     }
 }
 
