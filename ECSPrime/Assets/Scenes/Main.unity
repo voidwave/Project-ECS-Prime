@@ -302,7 +302,6 @@ GameObject:
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
   - component: {fileID: 534669907}
-  - component: {fileID: 534669906}
   - component: {fileID: 534669909}
   - component: {fileID: 534669908}
   m_Layer: 0
@@ -357,7 +356,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 0
+  m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -377,20 +376,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
---- !u!114 &534669906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb46b5cc7930e84ea89afb5fdf02e47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 534669905}
-  speed: 5
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1139ee524b2c584f82346e69bc81029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSystem: {fileID: 534669906}
   FPS: {fileID: 112777456}
 --- !u!114 &534669908
 MonoBehaviour:

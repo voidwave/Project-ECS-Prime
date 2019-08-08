@@ -22,7 +22,7 @@ public class MovementSystem : JobComponentSystem
                 return;
 
 
-            float3 dir = new float3(heading.Value.x, 0, heading.Value.z);
+            float3 dir = heading.Value;
             dir = math.normalize(dir);
             rotation.Value = Quaternion.LookRotation(dir);
             velocity.Linear = speed.Value * math.forward(rotation.Value);
