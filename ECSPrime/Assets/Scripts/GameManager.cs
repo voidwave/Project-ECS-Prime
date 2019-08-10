@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Physics;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private UnityEngine.Mesh PlayerMesh, EnemyMesh;// = (Resources.Load("Prefabs/Player") as GameObject).GetComponent<MeshFilter>().sharedMesh;
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        UpdateFPS();
+       
         //transform.rotation = GyroToUnity(Input.gyro.attitude);
         transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, 0);
     }
@@ -120,13 +120,13 @@ public class GameManager : MonoBehaviour
         return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
 
-    [SerializeField] private Text FPS;
+    //[SerializeField] private Text FPS;
     private float deltaTime = 0.0f;
     private void UpdateFPS()
     {
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
         float fps = 1.0f / deltaTime;
-        FPS.text = fps.ToString("0.0");
+        //FPS.text = fps.ToString("0.0");
     }
 }
 
